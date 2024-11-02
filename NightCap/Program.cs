@@ -41,12 +41,11 @@ namespace NightCap
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (Mutex mutex = new Mutex(true, MUTEX_NAME, out bool isOnly))
+            bool onlyInstance;
+            new Mutex(true, MUTEX_NAME, out onlyInstance);
+            if (!onlyInstance)
             {
-                if (!isOnly)
-                {
-                    Environment.Exit(-1);
-                }
+                Environment.Exit(-1);
             }
 
             Utils.CheckSystem();
